@@ -66,6 +66,16 @@ export class ProductsController {
     });
   }
 
+  @Get('/search/:productName')
+  async getProductsByName(@Res() res, @Param('productName') productName) {
+    const products = await this.productService.getProductsByName(productName);
+    return res.status(HttpStatus.OK).json({
+      statusCode: 200,
+      status: 'success',
+      data: { products },
+    });
+  }
+
   /**
    * @Put Actualizar una película
    *

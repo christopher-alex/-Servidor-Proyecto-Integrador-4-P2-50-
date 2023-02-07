@@ -7,14 +7,18 @@ export type CinemaDocument = Cinema & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Cinema {
-  
-  @Prop()
-  cinema_id: string;
   @Prop()
   name: string;
-  @Prop( [ { row: String, seats: Number } ] )
+  @Prop()
+  image: string;
+  @Prop([
+    {
+      row: String,
+      seats: Number,
+      seats_available: [],
+    },
+  ])
   seating_capacity: [];
 }
 
 export const CinemaSchema = SchemaFactory.createForClass(Cinema);
-

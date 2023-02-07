@@ -2,9 +2,9 @@ import { SchemaFactory } from '@nestjs/mongoose';
 import { Prop, Schema } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 
-export type ShowTimeDocument = ShowTime & Document
-@Schema()
-export class ShowTime {
+export type ShowtimeDocument = Showtime & Document
+@Schema( { timestamps: true, versionKey: false })
+export class Showtime {
   @Prop()
   code: string;
   @Prop({ type: mongoose.Types.ObjectId, ref: 'Movie' })
@@ -14,27 +14,11 @@ export class ShowTime {
   @Prop()
   date: Date;
   @Prop()
-  time: number;
+  time: Date;
   @Prop()
-  available_seats: [];
-  @Prop()
-  contentRating: string;
-  @Prop()
-  source: string;
-  @Prop()
-  tags: string[];
-  @Prop()
-  createdAt: Date;
-  @Prop()
-  updatedAt: Date;
+  available_seats: number;
+  
 }
 
-export const ShowTimeSchema = SchemaFactory.createForClass(ShowTime);
-ShowTimeSchema.pre('save', function (next) {
-  const showTime = this as ShowTimeDocument;
-  if (!showTime.createdAt) {
-    showTime.createdAt = new Date();
-  }
-  showTime.updatedAt = new Date();
-  next();
-});
+export const ShowtimeSchema = SchemaFactory.createForClass(Showtime);
+

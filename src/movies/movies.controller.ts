@@ -79,9 +79,9 @@ export class MoviesController {
     });
   }
 
-  @Get('/search/:title')
-  async getMoviesByTitle(@Res() res, @Param('title') title) {
-    const movies = await this.movieService.getMoviesByTitle(title);
+  @Get('/search/:movieTitle')
+  async getMoviesByTitle(@Res() res, @Param('movieTitle') movieTitle) {
+    const movies = await this.movieService.getMoviesByTitle(movieTitle);
     return res.status(HttpStatus.OK).json({
       statusCode: 200,
       status: 'success',
@@ -89,6 +89,15 @@ export class MoviesController {
     });
   }
 
+  /* @Get('/hasShowtimes')
+  async getMoviesHasShowtimes(@Res() res){
+    const movies = await this.movieService.getMoviesHasShowtimes();
+      return res.status(HttpStatus.OK).json({
+        statusCode: 200,
+        status: 'success',
+        data: { movies },
+      });
+  } */
   /**
    * @Put Actualizar una película
    *

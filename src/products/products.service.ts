@@ -32,6 +32,19 @@ export class ProductService {
   }
 
   /**
+   * getProductsByName - Obtiene una lista de productos por su Nombre sin importar mayúsculas o minúsculas
+   *
+   * @param {string} productName Nombre del producto a a obtener
+   * @returns {Promise<Product[]>} Promise con un arreglo de productos
+   */
+  async getProductsByName(productName: string): Promise<Product[]> {
+    const products = this.productModel.find({
+      name: { $regex: productName, $options: 'i' },
+    });
+    return products;
+  }
+
+  /**
    * createMovie - Crea una nueva película
    *
    * @param {CreateMovieDto} createProductDto Datos de la nueva película

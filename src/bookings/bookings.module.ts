@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { BookingsService } from './bookings.service';
+import { BookingService } from './bookings.service';
 import { BookingsController } from './bookings.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Bookings, BookingsSchema } from './schema/bookings.schema';
@@ -21,6 +21,6 @@ import { Product, ProductSchema } from 'src/products/schemas/products.schema';
     ]),
   ],
   controllers: [BookingsController],
-  providers: [BookingsService],
+  providers: [BookingService],
 })
 export class BookingsModule {}

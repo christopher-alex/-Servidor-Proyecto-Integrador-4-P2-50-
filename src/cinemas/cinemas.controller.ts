@@ -1,8 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, NotFoundException, Put, Res, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpStatus,
+  NotFoundException,
+  Put,
+  Res,
+  UseInterceptors,
+} from '@nestjs/common';
 import { CinemaService } from './cinemas.service';
 import { CreateCinemaDto } from './dto/create-cinema.dto';
 import { MorganInterceptor } from 'nest-morgan';
-
 
 @Controller('cinemas')
 export class CinemasController {
@@ -29,12 +41,12 @@ export class CinemasController {
   }
 
   /**
-   * @Get 
+   * @Get
    *
-   * @Route 
-   * 
-   * @param res 
-   * @returns 
+   * @Route
+   *
+   * @param res
+   * @returns
    */
   @Get('/')
   async getCinemas(@Res() res) {
@@ -47,14 +59,14 @@ export class CinemasController {
   }
 
   /**
-   * @Get 
+   * @Get
    *
-   * @Route 
-   * 
-   * @param res 
-   * @param cinemaID  
-   * @throws 
-   * @returns 
+   * @Route
+   *
+   * @param res
+   * @param cinemaID
+   * @throws
+   * @returns
    */
   @Get('/:cinemaID')
   async getCinema(@Res() res, @Param('cinemaID') cinemaID) {

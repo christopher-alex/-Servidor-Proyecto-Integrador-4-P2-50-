@@ -7,12 +7,15 @@ import { Bookings, BookingsDocument } from '../bookings/schema/bookings.schema';
 import { User, UserDocument } from 'src/users/schema/users.schema';
 import { Movie, MovieDocument } from 'src/movies/schema/movies.schema';
 import { Cinema, CinemaDocument } from 'src/cinemas/schema/cinema.schema';
-import { TicketType, TicketTypeDocument } from 'src/ticket_types/schema/ticket_types.schema';
+import {
+  TicketType,
+  TicketTypeDocument,
+} from 'src/ticket_types/schema/ticket_types.schema';
 import { Product, ProductDocument } from 'src/products/schemas/products.schema';
-
+import { Booking } from './entities/booking.entity';
 
 @Injectable()
-export class BookingsService {
+export class BookingService {
   constructor(
     @InjectModel(Bookings.name)
     private readonly bookingModel: Model<BookingsDocument>,
@@ -28,13 +31,7 @@ export class BookingsService {
     private readonly productModel: Model<ProductDocument>,
   ) {}
   async create(createBookingDto: CreateBookingDto, req: any) {
-    const [
-      user,
-      movie,
-      cinema,
-      ticketType,
-      product,
-    ] = await Promise.all([
+    const [user, movie, cinema, ticketType, product] = await Promise.all([
       this.userModel.findById(req.user_id),
       this.movieModel.findById(req.movie_id),
       this.cinemaModel.findById(req.cinema_id),
@@ -73,19 +70,65 @@ export class BookingsService {
     return bookingCreated;
   }
 
-  findAll() {
-    return `This action returns all bookings`;
+  async getBookings(): Promise<Booking[]> {
+    const bookings = this.bookingModel.find();
+    return bookings;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} booking`;
+  /**
+   * getMovie - Obtiene una película por su ID
+   *
+   * @param {string} bookingID ID de la película a obtener
+   * @returns {Promise<Movie>} Promise con la película obtenida
+   */
+  async getBooking(bookingID: string): Promise<Booking> {
+    const booking = this.bookingModel.findById(bookingID);
+    return booking;
   }
 
-  update(id: number, updateBookingDto: UpdateBookingDto) {
-    return `This action updates a #${id} booking`;
+  async getBookingsByTitle(title: string): Promise<Booking[]> {
+    const bookings = this.bookingModel.find({ title: { $regex: title } });
+    return bookings;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} booking`;
+  /**
+   * createMovie - Crea una nueva película
+   *
+   * @param {CreateMovieDto} createBookingDto Datos de la nueva película
+   * @returns {Promise<Movie>} Promise con la película creada
+   */
+  async createBooking(createBookingDto: CreateBookingDto): Promise<Booking> {
+    const newBooking = new this.bookingModel(createBookingDto);
+    return newBooking.save();
+  }
+
+  /**
+   * updateMovie - Actualiza una película
+   *
+   * @param {string} boookingID ID de la película a actualizar
+   * @param {CreateMovieDto} createProductDTO Datos actualizados de la película
+   * @returns {Promise<Movie>} Promise con la película actualizada
+   */
+  async updateBooking(
+    bookingID: string,
+    createProductDTO: CreateBookingDto,
+  ): Promise<Booking> {
+    const updatedBooking = this.movieModel.findByIdAndUpdate(
+      bookingID,
+      createProductDTO,
+      { new: true },
+    );
+    return updatedBooking;
+  }
+
+  /**
+   * deleteMovie - Elimina una película por su ID
+   *
+   * @param {string} bookingID ID de la película a eliminar
+   * @returns {Promise<any>} Promise con la respuesta de la operación
+   */
+  async deleteBooking(bookingID: string): Promise<any> {
+    const deletedBooking = this.bookingModel.findByIdAndDelete(bookingID);
+    return deletedBooking;
   }
 }

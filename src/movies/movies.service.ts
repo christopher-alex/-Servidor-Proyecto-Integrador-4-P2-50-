@@ -32,10 +32,21 @@ export class MovieService {
     return movie;
   }
 
-  async getMoviesByTitle(title: string): Promise<Movie[]> {
-    const movies = this.movieModel.find({ title: { $regex: title } });
+  /**
+   * getMoviesByTitle - Obtiene una lista de películas por su título sin importar mayúsculas o minúsculas
+   *
+   * @param {string} movieTitle Título de la película a obtener
+   * @returns {Promise<Movie[]>} Promise con un arreglo de películas
+   */
+  async getMoviesByTitle(movieTitle: string): Promise<Movie[]> {
+    const movies = this.movieModel.find({
+      title: { $regex: movieTitle, $options: 'i' },
+    });
     return movies;
   }
+
+  /* getMoviesHasShowtimes(): Promise<Movie[]> {
+  } */
 
   /**
    * createMovie - Crea una nueva película

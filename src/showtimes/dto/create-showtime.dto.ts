@@ -1,8 +1,10 @@
+import mongoose from "mongoose";
+
 export class CreateShowtimeDto {
-    readonly code: string;
-    readonly movie: string;
-    readonly cinema: string;
-    readonly date: Date;
-    readonly time: number;
-    readonly available_seats: [];
+  readonly code: string;
+  readonly movie: mongoose.Types.ObjectId;
+  readonly cinema: mongoose.Types.ObjectId;
+  readonly date: Date;
+  readonly time: Date;
+  readonly available_seats: number;
 }

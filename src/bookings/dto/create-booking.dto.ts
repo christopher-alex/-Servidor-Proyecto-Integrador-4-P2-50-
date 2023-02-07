@@ -4,6 +4,6 @@ export class CreateBookingDto {
   readonly user: string;
   readonly movie: string;
   readonly cinema: string;
-  readonly ticket_type: string;
-  readonly product: string;
+  readonly tickets: string[];
+  readonly products: string[];
 }
