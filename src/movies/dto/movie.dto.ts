@@ -3,7 +3,6 @@ export class CreateMovieDto {
   readonly year: number;
   readonly duration: number;
   readonly trailer: string;
-  readonly backdrop: string;
   readonly poster: string;
   readonly synopsis: string;
   readonly genre: string;

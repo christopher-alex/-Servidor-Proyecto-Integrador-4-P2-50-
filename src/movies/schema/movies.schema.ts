@@ -16,8 +16,6 @@ export class Movie {
   @Prop()
   trailer: string;
   @Prop()
-  backdrop: string;
-  @Prop()
   poster: string;
   @Prop()
   synopsis: string;
