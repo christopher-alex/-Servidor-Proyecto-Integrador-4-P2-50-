@@ -4,7 +4,7 @@ import { CreateTicketTypeDto } from './dto/create-ticket_type.dto';
 import { MorganInterceptor } from 'nest-morgan';
 
 
-@Controller('ticketTypes')
+@Controller('tickets')
 export class TicketTypesController {
   constructor(private readonly ticketTypeService: TicketTypeService) {}
 
@@ -22,14 +22,14 @@ export class TicketTypesController {
     @Res() res,
     @Body() createTicketTypeDto: CreateTicketTypeDto,
   ) {
-    const ticketType = await this.ticketTypeService.createTicketType(
+    const ticket = await this.ticketTypeService.createTicketType(
       createTicketTypeDto,
     );
     return res.status(HttpStatus.OK).json({
       statusCode: 200,
       status: 'success',
       message: 'Película creada correctamente',
-      data: { ticketType },
+      data: { ticket },
     });
   }
 
@@ -43,11 +43,11 @@ export class TicketTypesController {
    */
   @Get('/')
   async getTicketTypes(@Res() res) {
-    const ticketTypes = await this.ticketTypeService.getTicketTypes();
+    const tickets = await this.ticketTypeService.getTicketTypes();
     return res.status(HttpStatus.OK).json({
       statusCode: 200,
       status: 'success',
-      data: { ticketTypes },
+      data: { tickets },
     });
   }
 
@@ -63,12 +63,12 @@ export class TicketTypesController {
    */
   @Get('/:ticketTypeID')
   async getTicketType(@Res() res, @Param('ticketTypeID')ticketTypeID) {
-    const ticketType = await this.ticketTypeService.getTicketType(ticketTypeID);
-    if (!ticketType) throw new NotFoundException('ticketType does not exist!');
+    const ticket = await this.ticketTypeService.getTicketType(ticketTypeID);
+    if (!ticket) throw new NotFoundException('ticketType does not exist!');
     return res.status(HttpStatus.OK).json({
       statusCode: 200,
       status: 'success',
-      data: { ticketType },
+      data: { ticket },
     });
   }
 
@@ -89,17 +89,16 @@ export class TicketTypesController {
     @Body() createTicketTypeDto: CreateTicketTypeDto,
     @Param('ticketTypeID') ticketTypeID,
   ) {
-    const updatedTicketType = await this.ticketTypeService.updateTicketType(
+    const ticket = await this.ticketTypeService.updateTicketType(
       ticketTypeID,
       createTicketTypeDto,
     );
-    if (!updatedTicketType)
-      throw new NotFoundException('TicketType does not exist!');
+    if (!ticket) throw new NotFoundException('TicketType does not exist!');
     return res.status(HttpStatus.OK).json({
       statusCode: 200,
       status: 'success',
       message: 'Película actualizada correctamente',
-      data: { updatedTicketType },
+      data: { ticket },
     });
   }
 
@@ -116,16 +115,13 @@ export class TicketTypesController {
   @UseInterceptors(MorganInterceptor('combined'))
   @Delete('/delete/:ticketTypeID')
   async deleteTicketType(@Res() res, @Param('ticketTypeID') ticketTypeID) {
-    const ticketTypeDeleted = await this.ticketTypeService.deleteTicketType(
-      ticketTypeID,
-    );
-    if (!ticketTypeDeleted)
-      throw new NotFoundException('TicketType does not exist!');
+    const ticket = await this.ticketTypeService.deleteTicketType(ticketTypeID);
+    if (!ticket) throw new NotFoundException('TicketType does not exist!');
     return res.status(HttpStatus.OK).json({
       statusCode: 200,
       status: 'success',
       message: 'Película eliminada correctamente',
-      data: { ticketTypeDeleted },
+      data: { ticket },
     });
   }
 }

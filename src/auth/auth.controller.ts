@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  HttpStatus,
+  Res,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterAuthDto } from './dto/register-auth.dto';
@@ -18,14 +20,24 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  registerUser(@Body() userObject: RegisterAuthDto) {
-    return this.authService.register(userObject);
+  async registerUser(@Body() userObject: RegisterAuthDto, @Res() res) {
+    const data = await this.authService.register(userObject);
+    return res.status(HttpStatus.OK).json({
+      statusCode: 200,
+      status: 'success',
+      data: data,
+    });
   }
 
   @Post('login')
-  loginUser(@Body() userObjectLogin: LoginAuthDto) {
-    return this.authService.login(userObjectLogin);
-   }
+  async loginUser(@Body() userObjectLogin: LoginAuthDto, @Res() res) {
+    const data = await this.authService.login(userObjectLogin);
+    return res.status(HttpStatus.OK).json({
+      statusCode: 200,
+      status: 'success',
+      data: data,
+    });
+  }
 }
 
 

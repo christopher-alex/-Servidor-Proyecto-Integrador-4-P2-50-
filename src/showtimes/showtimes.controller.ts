@@ -1,13 +1,23 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, NotFoundException, Put, Res, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpStatus,
+  NotFoundException,
+  Put,
+  Res,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ShowtimeService } from './showtimes.service';
 import { CreateShowtimeDto } from './dto/create-showtime.dto';
 import { MorganInterceptor } from 'nest-morgan';
 
-
-
 @Controller('showtimes')
 export class ShowtimesController {
-  movieService: any;
   constructor(private readonly showtimeService: ShowtimeService) {}
 
   /**
@@ -151,5 +161,3 @@ export class ShowtimesController {
     });
   }
 }
-
-

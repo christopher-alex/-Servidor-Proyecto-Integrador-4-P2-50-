@@ -29,11 +29,17 @@ export class AuthService {
 
     if (!checkPassword) throw new HttpException('Password not match', 403);
 
-    const payload = { id: findUser._id, name: findUser.name };
+    const payload = {
+      user: {
+        id: findUser._id,
+        fullName: findUser.fullName,
+        email: findUser.email,
+        role: findUser.role,
+      },
+    };
     const token = await this.jwtService.sign(payload);
 
     const data = {
-      user: findUser,
       token,
     };
     return data;

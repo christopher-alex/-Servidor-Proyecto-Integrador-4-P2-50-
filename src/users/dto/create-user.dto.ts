@@ -1,4 +1,5 @@
-import { IsEmail, MaxLength, MinLength } from "class-validator";
+import { Prop } from "@nestjs/mongoose";
+import { IsEmail, IsNotEmpty, MaxLength, MinLength, } from "class-validator";
 
 export class CreateUserDto {
   @IsEmail()
@@ -7,4 +8,8 @@ export class CreateUserDto {
   @MinLength(4)
   @MaxLength(12)
   password: string;
+
+  @IsNotEmpty()
+  role: string;
+
 }
